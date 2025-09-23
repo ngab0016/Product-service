@@ -1,0 +1,5 @@
+# Test the product-service
+
+### Get list of products
+GET http://20.49.50.251:3030/products
+Accept: application/json
