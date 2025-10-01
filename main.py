@@ -3,14 +3,18 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from a .env file
+# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
-
-# Enable CORS for all routes and origins
 CORS(app)
 
+# Health check / root route
+@app.route('/')
+def home():
+    return "✅ Flask app is running on Azure App Service!"
+
+# Products endpoint
 @app.route('/products', methods=['GET'])
 def get_products():
     products = [
@@ -21,7 +25,6 @@ def get_products():
     return jsonify(products)
 
 if __name__ == '__main__':
-    # Get the port from environment variables or default to 3030
+    # Azure provides PORT dynamically, fall back to 3030 if missing
     port = int(os.getenv("PORT", 3030))
-    # Run the Flask app
     app.run(host="0.0.0.0", port=port)
